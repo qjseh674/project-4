@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NHL Slot Machine</title>
+</head>
+<body>
+
+<form name=slots onsubmit="rollem(); return false;">
+
+
+
+<table border=0 cellpadding=3 cellspacing=1 width=300>
+
+<tr><th colspan=2> Welcome to the Slot Machine! </th></tr>
+
+<tr><th align=right> Gold: </th>	<td align=left><input type=box size=20 name=gold READONLY value=100></td></tr>
+
+<tr><th align=right> Your bet: </th>	<td align=left><input type=box size=20 name=bet></td></tr>
+
+<tr><th><input type=submit value="Spin the slots"></th>
+
+<th><input type=button value="I am done for now" onclick="stopplay();"></th></tr>
+
+<tr><th colspan=2> <input type=reset value="Start over"> </th></tr>
+
+<tr><td colspan=2><hr></td></tr>
+
+
+
+<tr><td colspan=2>
+
+	<center>
+
+	<table cellspacing=5 cellpadding=2 border=0><tr>
+
+	<td><img src=1.gif height= "50" width ="60" name=slot1></td>
+
+	<td><img src=2.gif height= "50" width ="60" name=slot2></td>
+
+	<td><img src=3.gif height= "50" width ="60" name=slot3></td>
+
+	</tr></table>
+
+	<input type=text readonly size=33 name=banner>
+
+</td></tr>
+
+
+
+<tr><td colspan=2><hr></td></tr>
+
+<tr><td colspan=2><center>
+
+	<table width=150% border=0>
+
+	<tr><th colspan=3><font size=+1>Payouts</th></tr>
+
+	    <tr><th> 3 of a kind </th>	<td>
+            <img src=1.gif height= "50" width ="60" >
+            <img src=1.gif height= "50" width ="60">
+            <img src=1.gif height= "50" width ="60">
+        </td><th> 10x your bet </th></tr>
+
+        <tr><th> 3 of a kind </th>	<td>
+            <img src=2.gif height= "50" width ="60">
+            <img src=2.gif height= "50" width ="60">
+            <img src=2.gif height= "50" width ="60">
+        </td><th> 10x your bet </th></tr>
+
+        <tr><th> 3 of a kind </th>	<td>
+            <img src=3.gif height= "50" width ="60">
+            <img src=3.gif height= "50" width ="60">
+            <img src=3.gif height= "50" width ="60">
+        </td><th> 10x your bet </th></tr>
+
+        <tr><th> A pair </th>	<td>
+            <img src=2.gif height= "50" width ="60">
+            <img src=2.gif height= "50" width ="60">
+            <img src=3.gif height= "50" width ="60">
+        </td><th> 2x your bet </th></tr>
+
+	    <tr><th> or </th>		<td>
+            <img src=2.gif height= "50" width ="60">
+            <img src=2.gif height= "50" width ="60">
+            <img src=1.gif height= "50" width ="60">
+        </td><th> 2x your bet </th></tr>
+
+	    <tr><th> or </th>		<td>
+            <img src=3.gif height= "50" width ="60">
+            <img src=3.gif height= "50" width ="60">
+            <img src=1.gif height= "50" width ="60">
+        </td><th> 2x your bet </th></tr>
+
+        <tr><th> or </th>		<td>
+            <img src=3.gif height= "50" width ="60">
+            <img src=3.gif height= "50" width ="60">
+            <img src=2.gif height= "50" width ="60">
+        </td><th> 2x your bet </th></tr>
+
+        <tr><th> or </th>		<td>
+            <img src=1.gif height= "50" width ="60">
+            <img src=1.gif height= "50" width ="60">
+            <img src=2.gif height= "50" width ="60">
+        </td><th> 2x your bet </th></tr>
+
+        <tr><th> or </th>		<td>
+            <img src=2.gif height= "50" width ="60">
+            <img src=2.gif height= "50" width ="60">
+            <img src=3.gif height= "50" width ="60">
+        </td><th> 2x your bet </th></tr>
+
+        <tr><th> No match </th>	<td>
+            <img src=1.gif height= "50" width ="60">
+            <img src=2.gif height= "50" width ="60">
+            <img src=3.gif height= "50" width ="60">
+        </td><th> You lose </th></tr>
+
+	</table>
+
+</td></tr>
+
+</table></center>
+
+</form>
+
+
+
+<script>
+    var slotitem = ["0","1","2","3"];
+
+
+//slotitem = new Array('1.gif','2.gif','3.gif');
+
+document.slots.bet.focus();
+
+
+
+startgold=100;
+
+document.slots.gold.value=startgold;
+
+
+
+function stopplay () {
+
+if (document.slots.gold.value < startgold)
+
+	{alert("You lost "+ (startgold-document.slots.gold.value) +" gold pieces.   ");}
+
+else 	{alert("You gained "+ (document.slots.gold.value-startgold) +" gold pieces.   ");}
+
+}
+
+
+
+function rollem () {
+var number = document.slots.bet.value;
+
+if (isNaN(number)){alert("Please enter valid number");return false}
+
+if (document.slots.bet.value<1 || document.slots.bet.value == "") {alert("You cannot bet less that 1.   "); return;}
+
+if (Math.floor(document.slots.gold.value) < Math.floor(document.slots.bet.value)) {alert("Your bet "+document.slots.bet.value+" is larger than your remaining gold "+document.slots.gold.value+".  "); return;}
+
+if (document.slots.bet.value>1) {document.slots.banner.value="Bet is "+document.slots.bet.value+" gold pieces";}
+
+else {document.slots.banner.value="Bet is "+document.slots.bet.value+" gold piece";}
+
+counter=0;
+
+spinem();
+
+}
+
+
+
+
+//spins the slots and randomly chooses from 3 pictures
+function spinem() {
+
+turns1=10+Math.floor((Math.random() * 3)+1);
+
+for (a=0;a<turns1;a++)
+
+	{document.slots.slot1.src=""+slotitem[a % 9]+".gif"; }
+
+turns2=10+Math.floor((Math.random() * 3)+1);
+
+for (b=0;b<turns2;b++)
+
+	{document.slots.slot2.src=""+slotitem[b % 9]+".gif"; }
+
+turns3=10+Math.floor((Math.random() * 3)+1);
+
+for (c=0;c<turns3;c++)
+
+	{document.slots.slot3.src=""+slotitem[c % 9]+".gif"; }
+
+counter++;
+
+if (counter<25) {setTimeout("spinem(counter);",50);} else {checkmatch();}
+
+}
+
+
+
+
+//checks to see what rewards you get and it checks to make sure what item landed where
+function checkmatch()	{
+
+if ((document.slots.slot1.src == document.slots.slot2.src) && (document.slots.slot1.src == document.slots.slot3.src))
+
+	{document.slots.banner.value="3 of a kind - You won "+Math.floor(document.slots.bet.value*10)+" gold pieces";
+
+	 document.slots.gold.value=Math.floor(document.slots.gold.value)+Math.floor(document.slots.bet.value*10); }
+
+else if ((document.slots.slot1.src == document.slots.slot2.src) ||
+
+	(document.slots.slot1.src == document.slots.slot3.src) ||
+
+	(document.slots.slot2.src == document.slots.slot3.src))
+
+		{document.slots.banner.value="A pair - You won "+Math.floor(document.slots.bet.value*2)+" gold pieces";
+
+		 document.slots.gold.value = Math.floor(document.slots.bet.value*2) + Math.floor(document.slots.gold.value);}
+
+else {document.slots.gold.value=document.slots.gold.value-document.slots.bet.value;
+
+		document.slots.banner.value="No match - You lost "+document.slots.bet.value+" gold pieces";}
+
+	}
+
+</script>
+
+</body>
+</html>
